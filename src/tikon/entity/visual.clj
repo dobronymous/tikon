@@ -1,6 +1,7 @@
 (ns tikon.entity.visual
   (:require [clojure.string :as s]))
 
+;; @TODO: move somewhere
 (defn kw [p] 
   (apply str (rest (replace {\- \ } (str p)))) )
 

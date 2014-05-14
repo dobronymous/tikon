@@ -12,7 +12,7 @@
     (recur s (g/dispatch s -gs page))))
 
 (defn -main [& args]
-  (let [s (s/get-screen)]
+  (let [s (s/get-screen :swing)]
     (try
       (s/start s)
       (game-loop

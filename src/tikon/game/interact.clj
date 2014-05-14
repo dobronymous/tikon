@@ -31,7 +31,10 @@
            last
            last
            (format "In %s mood")))
-
+     (if (seq (e/get-position entity))
+       (let [pos (e/get-position entity)]
+         (str "She's " (ev/kw (first pos)) " the " (ev/kw (second pos))))
+       "She's standing")
      (str "---------------------------")))) 
 
 ;; chat
@@ -147,9 +150,27 @@
      (link "interests" (switch-link (partial ask-about entity :interests)))
      back-link)))
 
+;; positioning
+
+(defn position [entity position gs]
+  (wu gs
+      (eu/position entity position)))
+
+(defn ask-positioning [entity location gs]
+  (let [sit (map #(link (str "sit on " (ev/kw %)) (partial position entity [:sit %])) (:sit location))
+        lay (map #(link (str "lay on " (ev/kw %)) (partial position entity [:lay %])) (:lay location))
+        bend (map #(link (str "bend over " (ev/kw %)) (partial position entity [:bend %])) (:bend location))]
+    (p
+     (header gs entity)
+     sit
+     lay
+     bend
+     back-link)))
+
 (defn main [entity-name gs]
   (let [world (:world gs)
         entity (get-in gs [:world :entities entity-name])
+        location (w/get-location world (e/get-location entity))
         myself (get-in gs [:world :entities "me"])]
     (p
      (header gs entity)
@@ -157,20 +178,23 @@
        "Sorry, I'm too busy at the moment"
        (list
          (if (rl/can-chat? myself entity)
-           (list (link "Chat" (partial chat entity))
-                 (link "Ask ..." (switch-link (partial information entity))))
+           (list (link "Chat" (partial chat entity) :key \c)
+                 (link "Ask ..." (switch-link (partial information entity)) :key \a))
            "! no chat")
          (if (rl/can-foreplay? myself entity)
-           (link "Foreplay" (switch-link (partial tikon.game.sex.foreplay/main entity)))
+           (link "Foreplay" (switch-link (partial tikon.game.sex.foreplay/main entity)) :key \f)
            "! no foreplay")
+         (if (rl/can-position? myself entity)
+           (link "Positioning" (switch-link (partial ask-positioning entity location)) :key \p)
+           "! no position")
          (if (rl/can-dress? myself entity)
            (list
-             (link "Undress" (switch-link (partial undress entity)))
-             (link "Dress" #(switch-page % (partial dress entity))))
+             (link "Undress" (switch-link (partial undress entity)) :key \u)
+             (link "Dress" #(switch-page % (partial dress entity)) :key \d))
            "! no undress")
          (if (rl/can-date? myself entity)
            (if (= (get-in entity [:performing]) :date)
              (link "End date" (switch-link (partial undate entity)))
-             (link "Date" (switch-link (partial date entity))))
+             (link "Date" (switch-link (partial date entity)) :key \d))
            "! no date")))
      back-link)))

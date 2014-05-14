@@ -1,7 +1,5 @@
 (ns tikon.game.core
-  (:require [tikon.entity.update :as eu]
-            [tikon.world.update :as wu]
-            [tikon.world.time :as t]
+  (:require [tikon.world.time :as t]
             [tikon.entity.visual :as ev]
             [clojure.string]
             [tikon.ui.core :as ui]

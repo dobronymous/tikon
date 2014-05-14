@@ -9,14 +9,20 @@
 
 (defn location 
   "Initiate empty location named ~n"
-  [n]
+  [n & [sit lay bend]]
   {:name n
-   :passages []})
+   :passages []
+   :sit (set sit)
+   :lay (set lay)
+   :bend (set bend)})
 
 (defn passage
   "Make passage from ~loc1 to ~loc2 in ~lenght"
   [loc1 loc2 length]
   {:from loc1 :to loc2 :lenght length})
+
+(defn get-location [world locname]
+  (get-in world [:locs locname]))
 
 (defn add-entity 
   "Add ~e(ntity) to ~world at ~l(ocation)."

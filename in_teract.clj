@@ -1,4 +1,4 @@
-(ns tikon.game.interact
+(ns tikon.game.in-teract
   (:require [lanterna.screen :as s]
             [tikon.entity.visual :as ev]
             [tikon.entity.update :as eu]

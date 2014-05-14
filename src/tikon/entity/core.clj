@@ -10,7 +10,7 @@
    :subname sn
    :home home
    :location home
-   :relationships {"me" 151}
+   :relationships {"me" 100}
 
 
    :knowledge {:politics 10
@@ -41,11 +41,12 @@
    :pleasure 0
    :sex :female
    :age 20
+   :position [:sitting :chair]
 
    :nature nature
    :apperance apperance
    :cloth cloth
-   :cloth-inventory [[:head :hat]]
+   :cloth-inventory (list [:head :hat])
    :schedule schedule})
 
 (defn apperance [general height complication skin hair-style hair-color]
@@ -134,3 +135,9 @@
                            (not (get-cloth entity :bottom)) (* 1.1) 
                            (not (get-cloth entity :panties)) (* 1.3))
       basic)))
+
+(defn get-position [entity]
+  (:position entity))
+
+(defn set-position [entity pos]
+  (assoc entity :position pos))

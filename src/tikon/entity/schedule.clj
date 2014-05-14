@@ -23,6 +23,10 @@
   {:do :dress
    :cloth cloth})
 
+(defn position [& pos]
+  {:do :position
+   :position (if pos pos [])})
+
 (defn t 
   "Get time from ~minute, ~hour, ..."
   [& [minute hour day week month]]
@@ -33,6 +37,7 @@
   [& args]
   (case (first args)
     :travel (apply travel-to (rest args))
+    :position (apply position (rest args))
     :dress (apply change-clothing (rest args))))
 
 (defn actual-task 

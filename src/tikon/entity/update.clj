@@ -64,9 +64,15 @@
       (->  (case (:do task)
              :travel (let [location (if (= :home (:to task)) (e/get-home human) (:to task))]
                        (travel world (:name human) location))
+             :position (assoc-in world [:entities (:name human) :position] (:position task))
              :dress (assoc-in world [:entities (:name human) :cloth] (:cloth task))
              world)
           (assoc-in [:entities  (:name human) :performing] task)))))
+
+(defn position 
+  "Update ~entity ~position in ~world"
+  [world entity position]
+  (update-in world [:entities (:name entity)] e/set-position position))
 
 (defn update 
   "Update ~human and return updated ~world"

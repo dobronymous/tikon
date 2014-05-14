@@ -12,9 +12,11 @@
                        (s/conj-schedule (s/schedule)
                                         [(s/t 0 1) (s/d :dress sleeping)]
                                         [(s/t 0 1) (s/d :travel :home) {:priority 4}]
+                                        [(s/t 0 1) (s/d :position :laying :bed) {:priority 4}]
 
                                         [(s/t 0 6) (s/d :dress e/general-cloth)]
                                         [(s/t 0 6) (s/d :travel :home)]
+                                        [(s/t 0 6) (s/d :position)]
 
                                         [(s/t 0 8 0) (s/d :dress director-work)]
                                         [(s/t 0 8 0) (s/d :travel "directors cab") {:priority 10}]
@@ -39,9 +41,11 @@
 
                                         [(s/t 0 19) (s/d :dress e/general-cloth)]
                                         [(s/t 0 19) (s/d :travel :home)]
+                                        [(s/t 0 19) (s/d :position :sitting :armchair)]
 
                                         [(s/t 30 7 6) (s/d :dress bikini)]
-                                        [(s/t 0 8 6) (s/d :travel "beach")])
+                                        [(s/t 0 8 6) (s/d :travel "beach")]
+                                        [(s/t 0 8 6) (s/d :position :laying :ground)])
                        ))
 
 (def me (e/human "me" "no" "home" e/general-nature e/general-apperance e/general-cloth 
